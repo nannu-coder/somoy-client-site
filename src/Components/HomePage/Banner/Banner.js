@@ -1,4 +1,3 @@
-import { indigo } from '@mui/material/colors';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import BannerItem from '../BannerItem/BannerItem';
