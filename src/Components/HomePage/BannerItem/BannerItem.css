@@ -1,0 +1,5 @@
+.slider_content {
+  height: 100vh;
+  position: relative;
+  z-index: 8;
+}
