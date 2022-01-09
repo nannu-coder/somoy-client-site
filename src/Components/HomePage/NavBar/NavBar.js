@@ -13,11 +13,11 @@ import MenuItem from '@mui/material/MenuItem';
 import { FiUser } from 'react-icons/fi';
 import { IconContext } from "react-icons";
 import { Link, NavLink } from 'react-router-dom';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import useAuth from '../../../Hooks/useAuth';
 
 
 const NavBar = () => {
+    const { user, logOut } = useAuth()
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -110,45 +110,63 @@ const NavBar = () => {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            {user.email ? <Box>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 
-                                    <IconContext.Provider
-                                        value={{ color: '#fff', size: '36px' }}
-                                    >
-                                        <div>
-                                            <FiUser />
-                                        </div>
-                                    </IconContext.Provider>
-                                </IconButton>
-                            </Tooltip>
+                                        <IconContext.Provider
+                                            value={{ color: '#fff', size: '36px' }}
+                                        >
+                                            <div>
+                                                <FiUser />
+                                            </div>
+                                        </IconContext.Provider>
+                                    </IconButton>
+                                </Tooltip>
 
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">
+                                            <Link to='/'>
+                                                profile
+                                            </Link>
+                                        </Typography>
                                     </MenuItem>
-                                ))}
-                            </Menu>
 
-                            <Link to='/login'>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">
+                                            <Link to='/'>
+                                                Dashboard
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">
+                                            <Button onClick={logOut} variant="text">Log Out</Button>
+                                        </Typography>
+                                    </MenuItem>
+                                </Menu>
+                            </Box> : <Link to='/login'>
                                 <Button variant='content'>Login</Button>
-                            </Link>
+                            </Link>}
+
+
 
                         </Box>
                     </Toolbar>

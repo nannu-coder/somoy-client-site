@@ -1,29 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom'
+import useAuth from '../../../Hooks/useAuth';
+import { CircularProgress } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 
 
 const Login = () => {
+    const [data, setData] = useState({})
+    const { loginUser, isLoading, error, googleSignIn } = useAuth();
+
+    const handleData = (event) => {
+        event.preventDefault();
+        const field = event.target.name;
+        const value = event.target.value;
+        const newData = { ...data };
+        newData[field] = value;
+        setData(newData)
+
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const values = { email: data.email, password: data.password }
+        loginUser(values)
     };
 
     return (
@@ -43,7 +52,7 @@ const Login = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                {isLoading ? <CircularProgress /> : <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -51,6 +60,7 @@ const Login = () => {
                         id="email"
                         label="Email Address"
                         name="email"
+                        onBlur={handleData}
                         autoComplete="email"
                         autoFocus
                     />
@@ -59,14 +69,11 @@ const Login = () => {
                         required
                         fullWidth
                         name="password"
+                        onBlur={handleData}
                         label="Password"
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
                     />
                     <Button
                         type="submit"
@@ -88,7 +95,9 @@ const Login = () => {
                             </Link>
                         </Grid>
                     </Grid>
-                </Box>
+                    <Button onClick={googleSignIn} sx={{ margin: '20px 0' }} fullWidth variant='contained'>Continue With Google</Button>
+                    {error && <Alert severity="error">{error}</Alert>}
+                </Box>}
             </Box>
         </Container>
     );

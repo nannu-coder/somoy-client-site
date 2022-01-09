@@ -10,10 +10,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Alert } from '@mui/material';
+
 
 const SignUp = () => {
     const [data, setData] = useState({});
-    const { createUser } = useAuth();
+    const { createUser, isLoading, error, googleSignIn } = useAuth();
 
     const handleData = (event) => {
         event.preventDefault();
@@ -47,7 +50,7 @@ const SignUp = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                {isLoading ? <CircularProgress /> : <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -107,7 +110,9 @@ const SignUp = () => {
                             </Link>
                         </Grid>
                     </Grid>
-                </Box>
+                    <Button onClick={googleSignIn} sx={{ margin: '20px 0' }} fullWidth variant='contained'>Continue With Google</Button>
+                    {error && <Alert severity="error">{error}</Alert>}
+                </Box>}
             </Box>
         </Container>
     );
