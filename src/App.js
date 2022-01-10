@@ -9,6 +9,7 @@ import NavBar from './Components/HomePage/NavBar/NavBar';
 import Login from './Components/Login/Login/Login';
 import SignUp from './Components/Login/SignUp/SignUp';
 import AuthProvider from './Context/AuthProvider';
+import BuyNow from './Components/BuyNow/BuyNow/BuyNow';
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
 
             <Route path='/signup'>
               <SignUp></SignUp>
+            </Route>
+
+            <Route path='/buynow/:Id'>
+              <BuyNow></BuyNow>
             </Route>
 
           </Switch>
