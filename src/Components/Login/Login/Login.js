@@ -12,12 +12,17 @@ import { Link } from 'react-router-dom'
 import useAuth from '../../../Hooks/useAuth';
 import { CircularProgress } from '@mui/material';
 import Alert from '@mui/material/Alert';
+import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 
 const Login = () => {
     const [data, setData] = useState({})
-    const { loginUser, isLoading, error, googleSignIn } = useAuth();
+    const { loginUser, isLoading, error, googleSignIn, user } = useAuth();
+
+    const location = useLocation();
+    const history = useHistory();
 
     const handleData = (event) => {
         event.preventDefault();
@@ -31,7 +36,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const values = { email: data.email, password: data.password }
+        const values = { email: data.email, password: data.password, location, history }
         loginUser(values)
     };
 
@@ -97,7 +102,9 @@ const Login = () => {
                     </Grid>
                     <Button onClick={googleSignIn} sx={{ margin: '20px 0' }} fullWidth variant='contained'>Continue With Google</Button>
                     {error && <Alert severity="error">{error}</Alert>}
+                    {/* {!error && <Alert severity="success">Login Successfully</Alert>} */}
                 </Box>}
+
             </Box>
         </Container>
     );

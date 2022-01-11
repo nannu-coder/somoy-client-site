@@ -7,47 +7,80 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import AddressForm from '../AddressForm/AddressForm'
 import PaymentForm from '../PaymentForm/PaymentForm';
 import Review from '../Review/Review';
 import { useParams } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 
-
-
 const BuyNow = () => {
-
-    const [paymentData, setPaymentData] = useState({});
-    const [address, setAddress] = useState({});
+    const [orderData, setOrderData] = useState({});
     const { Id } = useParams();
+    const methods = useForm({
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            address1: '',
+            address2: '',
+            city: '',
+            state: '',
+            zip: '',
+            country: '',
+            cardName: '',
+            cardNumber: '',
+            exDate: '',
+            cvv: ''
+
+        }
+    });
+
+    // const onSubmit = (data) => {
+    //     console.log(data);
+    // }
 
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <AddressForm address={address} setAddress={setAddress} />;
+                return <AddressForm />;
             case 1:
-                return <PaymentForm paymentData={paymentData} setPaymentData={setPaymentData} />;
+                return <PaymentForm />;
             case 2:
-                return <Review paymentData={paymentData} address={address} Id={Id} />;
+                return <Review Id={Id} orderData={orderData} />;
             default:
                 throw new Error('Unknown step');
         }
     }
 
 
-
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const handleNext = () => {
+    const handleNext = (data) => {
+        const finalData = { ...data, Id }
+        setOrderData(finalData)
+        if (activeStep == steps.length - 1) {
+            // send data to the server
+            fetch('http://localhost:5000/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(finalData)
+            })
+
+        }
+
+
+
         setActiveStep(activeStep + 1);
+
     };
 
     const handleBack = () => {
-        setActiveStep(activeStep - 1);
+        setActiveStep(activeStep - 1)
     };
     return (
         <Box>
@@ -77,29 +110,37 @@ const BuyNow = () => {
                                 </Typography>
                             </React.Fragment>
                         ) : (
-                            <React.Fragment>
-                                {getStepContent(activeStep)}
-                                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    {activeStep !== 0 && (
-                                        <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                                            Back
-                                        </Button>
-                                    )}
+                            <>
+                                <FormProvider {...methods}>
+                                    <form onSubmit={methods.handleSubmit(handleNext)}>{getStepContent(activeStep)}
 
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{ mt: 3, ml: 1 }}
-                                    >
-                                        {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                                    </Button>
-                                </Box>
-                            </React.Fragment>
+                                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                            {activeStep !== 0 && (
+                                                <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                                    Back
+                                                </Button>
+                                            )}
+
+                                            <Button
+                                                type='submit'
+                                                variant="contained"
+                                                // onClick={handleNext}
+                                                sx={{ mt: 3, ml: 1 }}
+                                            >
+                                                {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                                            </Button>
+                                        </Box>
+                                    </form>
+                                </FormProvider>
+
+
+                            </>
                         )}
                     </React.Fragment>
                 </Paper>
             </Container>
-        </Box>
+
+        </Box >
     );
 };
 

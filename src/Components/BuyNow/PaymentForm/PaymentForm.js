@@ -5,19 +5,10 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/material';
-import BuyNow from '../BuyNow/BuyNow';
+import { useFormContext, Controller } from 'react-hook-form';
 
-const PaymentForm = ({ paymentData, setPaymentData }) => {
-
-
-    const data = (event) => {
-        event.preventDefault()
-        const field = event.target.name;
-        const value = event.target.value;
-        const newData = { ...paymentData }
-        newData[field] = value;
-        setPaymentData(newData)
-    }
+const PaymentForm = () => {
+    const { control, formState: { errors } } = useFormContext();
 
     return (
         <React.Fragment>
@@ -27,52 +18,88 @@ const PaymentForm = ({ paymentData, setPaymentData }) => {
             <Box component="form">
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
-                        <TextField
-                            required
-                            id="cardName"
-                            label="Name on card"
+
+                        <Controller
+                            control={control}
                             name="cardName"
-                            onBlur={data}
-                            fullWidth
-                            autoComplete="cc-name"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="cardName"
+                                    label="Name on card"
+                                    fullWidth
+                                    autoComplete="cc-name"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.cardName}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <TextField
-                            required
-                            id="cardNumber"
-                            label="Card number"
+
+                        <Controller
+                            control={control}
                             name="cardNumber"
-                            onBlur={data}
-                            fullWidth
-                            autoComplete="cc-number"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="cardNumber"
+                                    label="Card number"
+                                    fullWidth
+                                    autoComplete="cc-number"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.cardNumber}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <TextField
-                            required
-                            id="expDate"
-                            label="Expiry date"
+
+                        <Controller
+                            control={control}
                             name="exDate"
-                            onBlur={data}
-                            fullWidth
-                            autoComplete="cc-exp"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="expDate"
+                                    label="Expiry date"
+                                    fullWidth
+                                    autoComplete="cc-exp"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.exDate}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <TextField
-                            required
-                            id="cvv"
-                            label="CVV"
+
+                        <Controller
+                            control={control}
                             name="cvv"
-                            onBlur={data}
-                            helperText="Last three digits on signature strip"
-                            fullWidth
-                            autoComplete="cc-csc"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="cvv"
+                                    label="CVV"
+                                    helperText="Last three digits on signature strip"
+                                    fullWidth
+                                    autoComplete="cc-csc"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.cvv}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>

@@ -10,6 +10,8 @@ import Login from './Components/Login/Login/Login';
 import SignUp from './Components/Login/SignUp/SignUp';
 import AuthProvider from './Context/AuthProvider';
 import BuyNow from './Components/BuyNow/BuyNow/BuyNow';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import Dashboard from './Components/Dashboard/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -34,9 +36,13 @@ function App() {
               <SignUp></SignUp>
             </Route>
 
-            <Route path='/buynow/:Id'>
+            <PrivateRoute path='/buynow/:Id'>
               <BuyNow></BuyNow>
-            </Route>
+            </PrivateRoute>
+
+            <PrivateRoute path='/dashboard'>
+              <Dashboard></Dashboard>
+            </PrivateRoute>
 
           </Switch>
         </Router>

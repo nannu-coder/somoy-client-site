@@ -5,17 +5,10 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/material';
+import { useFormContext, Controller } from 'react-hook-form';
 
-const AddressForm = ({ address, setAddress }) => {
-
-    const addressData = (event) => {
-        event.preventDefault();
-        const field = event.target.name;
-        const value = event.target.value;
-        const newAddressData = { ...address };
-        newAddressData[field] = value;
-        setAddress(newAddressData)
-    }
+const AddressForm = () => {
+    const { control, formState: { errors } } = useFormContext();
 
     return (
         <React.Fragment>
@@ -25,96 +18,168 @@ const AddressForm = ({ address, setAddress }) => {
             <Box component="form">
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="firstName"
+                        <Controller
+                            control={control}
                             name="firstName"
-                            onBlur={addressData}
-                            label="First name"
-                            fullWidth
-                            autoComplete="given-name"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="firstName"
+                                    label="First name"
+                                    fullWidth
+                                    autoComplete="given-name"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.firstName}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="lastName"
+
+                        <Controller
+                            control={control}
                             name="lastName"
-                            onBlur={addressData}
-                            label="Last name"
-                            fullWidth
-                            autoComplete="family-name"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="lastName"
+                                    label="Last name"
+                                    fullWidth
+                                    autoComplete="family-name"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.lastName}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            required
-                            id="address1"
+                        <Controller
+                            control={control}
                             name="address1"
-                            onBlur={addressData}
-                            label="Address line 1"
-                            fullWidth
-                            autoComplete="shipping address-line1"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="address1"
+                                    label="Address line 1"
+                                    fullWidth
+                                    autoComplete="shipping address-line1"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.address1}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            id="address2"
+
+                        <Controller
+                            control={control}
                             name="address2"
-                            onBlur={addressData}
-                            label="Address line 2"
-                            fullWidth
-                            autoComplete="shipping address-line2"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="address2"
+                                    label="Address line 2"
+                                    fullWidth
+                                    autoComplete="shipping address-line2"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.address2}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="city"
+
+                        <Controller
+                            control={control}
                             name="city"
-                            onBlur={addressData}
-                            label="City"
-                            fullWidth
-                            autoComplete="shipping address-level2"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="city"
+                                    label="City"
+                                    fullWidth
+                                    autoComplete="shipping address-level2"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.city}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            id="state"
+
+                        <Controller
+                            control={control}
                             name="state"
-                            onBlur={addressData}
-                            label="State/Province/Region"
-                            fullWidth
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="state"
+                                    label="State/Province/Region"
+                                    fullWidth
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.state}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="zip"
+
+                        <Controller
+                            control={control}
                             name="zip"
-                            onBlur={addressData}
-                            label="Zip / Postal code"
-                            fullWidth
-                            autoComplete="shipping postal-code"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="zip"
+                                    label="Zip / Postal code"
+                                    fullWidth
+                                    autoComplete="shipping postal-code"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.zip}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="country"
+
+                        <Controller
+                            control={control}
                             name="country"
-                            onBlur={addressData}
-                            label="Country"
-                            fullWidth
-                            autoComplete="shipping country"
-                            variant="standard"
+                            rules={{
+                                required: true
+                            }}
+                            render={({ field }) => (
+                                <TextField
+                                    id="country"
+                                    label="Country"
+                                    fullWidth
+                                    autoComplete="shipping country"
+                                    variant="standard"
+                                    {...field}
+                                    error={errors.country}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>

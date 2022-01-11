@@ -29,7 +29,7 @@ const SignUp = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const values = { email: data.email, password: data.password }
+        const values = { email: data.email, password: data.password, name: data.firstName }
         createUser(values)
     };
 

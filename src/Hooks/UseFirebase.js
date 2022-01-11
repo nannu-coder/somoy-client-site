@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import initializeAuthentication from '../Components/Login/Firebase/Firebase.init';
 
 
@@ -14,14 +14,22 @@ const UseFirebase = () => {
     const googleProvider = new GoogleAuthProvider();
 
 
-    const createUser = ({ email, password }) => {
+    const createUser = ({ email, password, name }) => {
         setIsLoading(true)
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
                 const user = userCredential.user;
+                const newUser = { email, displayName: name };
+                setUser(newUser)
 
-                setUser(user)
+                saveUser(email, name)
+
+                updateProfile(auth.currentUser, {
+                    displayName: name,
+                }).then(() => {
+                }).catch((error) => {
+                });
+
                 setError('')
             })
             .catch((error) => {
@@ -29,11 +37,12 @@ const UseFirebase = () => {
             }).finally(() => setIsLoading(false));
     };
 
-    const loginUser = ({ email, password }) => {
+    const loginUser = ({ email, password, location, history }) => {
         setIsLoading(true)
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
+                const newDestination = location?.state?.from || '/';
+                history.replace(newDestination);
                 const user = userCredential.user;
                 setUser(user)
                 setError('')
@@ -49,6 +58,7 @@ const UseFirebase = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
+
                 setUser(user)
                 setError('')
             }).catch((error) => {
@@ -68,11 +78,22 @@ const UseFirebase = () => {
         });
     }, []);
 
+    const saveUser = (email, displayName) => {
+        const user = { email, displayName }
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+    }
+
     const logOut = () => {
         signOut(auth).then(() => {
-            // Sign-out successful.
+
         }).catch((error) => {
-            // An error happened.
+
         });
     }
 
