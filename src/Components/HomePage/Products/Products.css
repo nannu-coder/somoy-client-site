@@ -1,0 +1,14 @@
+.card_btn {
+  background-color: transparent;
+  border: 1px solid #ff4838;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #ff4838;
+  transition: all linear 0.3s;
+  cursor: pointer;
+}
+
+.card_btn:hover {
+  background-color: #ff4838;
+  color: #fff;
+}

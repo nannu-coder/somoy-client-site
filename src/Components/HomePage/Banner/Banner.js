@@ -7,14 +7,22 @@ const Banner = () => {
 
     var items = [
         {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!",
-            img: 'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+            name: "The Stone Series",
+            title: "Great Leather Collection",
+            description: 'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
+            img: 'https://i.ibb.co/7JR8cg3/banner-1.jpg',
         },
         {
-            name: "Random Name #2",
-            description: "Hello World!",
-            img: 'https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+            name: "The Stone Series",
+            title: "Black Great Addition",
+            description: 'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
+            img: 'https://i.ibb.co/bzSVrks/banner-2.jpg'
+        },
+        {
+            name: "The Stone Series",
+            title: 'A Great New Addition',
+            description: 'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
+            img: 'https://i.ibb.co/YDQ79gj/banner-3.jpg',
         }
     ]
 

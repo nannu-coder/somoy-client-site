@@ -83,7 +83,7 @@ const BuyNow = () => {
         setActiveStep(activeStep - 1)
     };
     return (
-        <Box>
+        <Box style={{ marginTop: '80px' }}>
             <CssBaseline />
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>

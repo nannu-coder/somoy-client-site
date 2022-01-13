@@ -14,6 +14,8 @@ import { FiUser } from 'react-icons/fi';
 import { IconContext } from "react-icons";
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
+import './NavBar.css';
+import { Divider } from '@mui/material';
 
 
 const NavBar = () => {
@@ -40,7 +42,7 @@ const NavBar = () => {
 
     return (
         <div>
-            <AppBar position="static">
+            <AppBar className='navbar' color="inherit" elevation={3}>
                 <Container>
                     <Toolbar disableGutters>
                         <Typography
@@ -98,10 +100,10 @@ const NavBar = () => {
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
-                            <NavLink to='/home'>
+                            <NavLink style={{ textDecoration: 'none', fontSize: '16px', fontWeight: 'bold' }} to='/home'>
                                 <Button
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    sx={{ my: 2, color: '#343434', display: 'block' }}
                                 >
                                     Home
                                 </Button>
@@ -115,7 +117,7 @@ const NavBar = () => {
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 
                                         <IconContext.Provider
-                                            value={{ color: '#fff', size: '36px' }}
+                                            value={{ color: '#343434', size: '36px' }}
                                         >
                                             <div>
                                                 <FiUser />
@@ -142,7 +144,7 @@ const NavBar = () => {
                                 >
                                     <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">
-                                            <Link to='/'>
+                                            <Link style={{ color: '#343434', textDecoration: 'none', fontSize: '16px', fontWeight: 'bold' }} to='/'>
                                                 profile
                                             </Link>
                                         </Typography>
@@ -150,19 +152,19 @@ const NavBar = () => {
 
                                     <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">
-                                            <Link to='/dashboard'>
+                                            <Link style={{ color: '#343434', textDecoration: 'none', fontSize: '16px', fontWeight: 'bold' }} to='/dashboard'>
                                                 Dashboard
                                             </Link>
                                         </Typography>
                                     </MenuItem>
-
+                                    <Divider />
                                     <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">
-                                            <Button onClick={logOut} variant="text">Log Out</Button>
+                                            <Button style={{ color: '#343434', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }} onClick={logOut} variant="text">Log Out</Button>
                                         </Typography>
                                     </MenuItem>
                                 </Menu>
-                            </Box> : <Link to='/login'>
+                            </Box> : <Link style={{ color: '#343434', textDecoration: 'none', fontSize: '16px', fontWeight: 'bold' }} to='/login'>
                                 <Button variant='content'>Login</Button>
                             </Link>}
 

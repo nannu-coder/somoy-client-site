@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,11 +12,19 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaStar, FaCartPlus, FaUserCog, FaAmazonPay, FaGift } from 'react-icons/fa';
+import { AiFillSetting } from 'react-icons/ai';
 import { Link, Route, Switch } from 'react-router-dom';
 import { useRouteMatch } from 'react-router-dom';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import ManageOrder from '../ManageOrder/ManageOrder';
+import AdminRoute from '../AdminRoute/AdminRoute';
+import useAuth from '../../../Hooks/useAuth';
+import { CircularProgress } from '@mui/material';
+import DashboardHome from '../DashboardHome/DashboardHome';
+import Review from '../Ratings/Ratings';
+import MyOrders from '../MyOrders/MyOrders';
+import AddServices from '../AddServices/AddServices';
 
 
 const drawerWidth = 240;
@@ -25,6 +33,13 @@ const Dashboard = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     let { path, url } = useRouteMatch();
+    const { admin, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <CircularProgress />
+    }
+
+    console.log(admin)
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -48,27 +63,80 @@ const Dashboard = (props) => {
                     </ListItem>
                 </Link>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <FaHome size={25} />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography >
-                            <Link to={`${url}/makeadmin`}>Make Admin</Link>
-                        </Typography>
-                    </ListItemText>
-                </ListItem>
+                <Link to='/comesoon'>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <FaAmazonPay size={25} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography >
+                                Payment
+                            </Typography>
+                        </ListItemText>
+                    </ListItem>
+                </Link>
 
-                <ListItem button>
+                <Link to={`${url}/review`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <FaStar size={25} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography >
+                                Review
+                            </Typography>
+                        </ListItemText>
+                    </ListItem>
+                </Link>
+
+                <Link to={`${url}/myorders`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <FaCartPlus size={25} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography >
+                                My Orders
+                            </Typography>
+                        </ListItemText>
+                    </ListItem>
+                </Link>
+
+                {admin && <Link to={`${url}/makeadmin`} activeStyle={{
+                    fontWeight: "bold",
+                    color: "red"
+                }}> <ListItem button>
+                        <ListItemIcon>
+                            <FaUserCog size={25} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography >
+                                Make Admin
+                            </Typography>
+                        </ListItemText>
+                    </ListItem> </Link>}
+
+                {admin && <Link to={`${url}/manageorders`}><ListItem button>
                     <ListItemIcon>
-                        <FaHome size={25} />
+                        <AiFillSetting size={25} />
                     </ListItemIcon>
                     <ListItemText>
                         <Typography >
-                            <Link to={`${url}/manageorders`}>Manage Order</Link>
+                            Manage Order
                         </Typography>
                     </ListItemText>
-                </ListItem>
+                </ListItem> </Link>}
+
+                {admin && <Link to={`${url}/addservice`}><ListItem button>
+                    <ListItemIcon>
+                        <FaGift size={25} />
+                    </ListItemIcon>
+                    <ListItemText>
+                        <Typography >
+                            Add Service
+                        </Typography>
+                    </ListItemText>
+                </ListItem> </Link>}
             </List>
         </div>
     );
@@ -141,14 +209,23 @@ const Dashboard = (props) => {
                 {/* <Toolbar /> */}
                 <Switch>
                     <Route exact path={path}>
-                        <h3>Please select a topic.</h3>
+                        <DashboardHome></DashboardHome>
                     </Route>
-                    <Route path={`${path}/makeadmin`}>
+                    <AdminRoute path={`${path}/makeadmin`}>
                         <MakeAdmin></MakeAdmin>
-                    </Route>
-                    <Route path={`${path}/manageorders`}>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/manageorders`}>
                         <ManageOrder></ManageOrder>
-                    </Route>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/review`}>
+                        <Review></Review>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/myorders`}>
+                        <MyOrders></MyOrders>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/addservice`}>
+                        <AddServices></AddServices>
+                    </AdminRoute>
                 </Switch>
             </Box>
         </Box>
