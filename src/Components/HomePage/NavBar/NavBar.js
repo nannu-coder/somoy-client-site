@@ -109,6 +109,15 @@ const NavBar = () => {
                                 </Button>
                             </NavLink>
 
+                            <NavLink style={{ textDecoration: 'none', fontSize: '16px', fontWeight: 'bold' }} to='/allproduct'>
+                                <Button
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: '#343434', display: 'block' }}
+                                >
+                                    Products
+                                </Button>
+                            </NavLink>
+
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>

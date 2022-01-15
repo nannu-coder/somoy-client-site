@@ -39,15 +39,13 @@ const Dashboard = (props) => {
         return <CircularProgress />
     }
 
-    console.log(admin)
-
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
     const drawer = (
         <div>
-            <Toolbar />
+            <Toolbar style={{ padding: '36px' }} />
             <Divider />
             <List>
                 <Link to='/home'>
@@ -116,7 +114,7 @@ const Dashboard = (props) => {
                         </ListItemText>
                     </ListItem> </Link>}
 
-                {admin && <Link to={`${url}/manageorders`}><ListItem button>
+                {admin && <Link to={`${url}/manageorder`}><ListItem button>
                     <ListItemIcon>
                         <AiFillSetting size={25} />
                     </ListItemIcon>
@@ -155,7 +153,7 @@ const Dashboard = (props) => {
                     ml: { sm: `${drawerWidth}px` },
                 }}
             >
-                <Toolbar style={{ padding: '20px' }}>
+                <Toolbar elevation={3} style={{ padding: '20px', backgroundColor: '#ffff' }}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -165,7 +163,7 @@ const Dashboard = (props) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
+                    <Typography style={{ color: '#343434' }} variant="h6" noWrap component="div">
                         Dashboard
                     </Typography>
                 </Toolbar>
@@ -214,14 +212,15 @@ const Dashboard = (props) => {
                     <AdminRoute path={`${path}/makeadmin`}>
                         <MakeAdmin></MakeAdmin>
                     </AdminRoute>
-                    <AdminRoute path={`${path}/manageorders`}>
-                        <ManageOrder></ManageOrder>
-                    </AdminRoute>
-                    <AdminRoute path={`${path}/review`}>
+
+                    <Route path={`${path}/review`}>
                         <Review></Review>
-                    </AdminRoute>
+                    </Route>
                     <AdminRoute path={`${path}/myorders`}>
                         <MyOrders></MyOrders>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/manageorder`}>
+                        <ManageOrder></ManageOrder>
                     </AdminRoute>
                     <AdminRoute path={`${path}/addservice`}>
                         <AddServices></AddServices>

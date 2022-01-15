@@ -38,8 +38,9 @@ const MakeAdmin = () => {
 
     return (
         <div style={{ marginTop: '80px' }}>
-            <Box style={{ maxWidth: '500px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <form onSubmit={handleSubmit}>
+            <h1 style={{ textAlign: 'center' }}>Make Admin</h1>
+            <Box>
+                <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={handleSubmit}>
                     <TextField
                         id="outlined-basic"
                         fullWidth

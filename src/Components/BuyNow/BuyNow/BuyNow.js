@@ -13,6 +13,7 @@ import PaymentForm from '../PaymentForm/PaymentForm';
 import Review from '../Review/Review';
 import { useParams } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
+import useAuth from '../../../Hooks/useAuth';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -20,6 +21,7 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 const BuyNow = () => {
     const [orderData, setOrderData] = useState({});
     const { Id } = useParams();
+    const { user } = useAuth();
     const methods = useForm({
         defaultValues: {
             firstName: '',
@@ -59,7 +61,8 @@ const BuyNow = () => {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = (data) => {
-        const finalData = { ...data, Id }
+        const email = user.email;
+        const finalData = { ...data, Id, email }
         setOrderData(finalData)
         if (activeStep == steps.length - 1) {
             // send data to the server

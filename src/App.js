@@ -12,6 +12,9 @@ import AuthProvider from './Context/AuthProvider';
 import BuyNow from './Components/BuyNow/BuyNow/BuyNow';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Dashboard from './Components/Dashboard/Dashboard/Dashboard';
+import AllProduct from './Components/AllProducts/AllProduct/AllProduct';
+import NotFound from './Components/NotFound/NotFound';
+import ComeSoon from './Components/ComeSoon/ComeSoon';
 
 function App() {
   return (
@@ -43,6 +46,18 @@ function App() {
             <PrivateRoute path='/dashboard'>
               <Dashboard></Dashboard>
             </PrivateRoute>
+
+            <Route path='/allproduct'>
+              <AllProduct></AllProduct>
+            </Route>
+
+            <Route path='/comesoon'>
+              <ComeSoon></ComeSoon>
+            </Route>
+
+            <Route path='*'>
+              <NotFound></NotFound>
+            </Route>
 
           </Switch>
         </Router>

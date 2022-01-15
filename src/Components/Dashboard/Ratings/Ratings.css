@@ -1,0 +1,15 @@
+.review_experience {
+  display: flex;
+  justify-content: center;
+}
+.ratingField {
+  width: 550px;
+  padding: 50px;
+  border: 1px solid #c5c5c5;
+  margin-top: 80px;
+  border-radius: 10px;
+}
+.ratingField form {
+  display: flex;
+  flex-direction: column;
+}

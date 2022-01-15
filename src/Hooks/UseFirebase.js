@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken } from "firebase/auth";
 import initializeAuthentication from '../Components/Login/Firebase/Firebase.init';
 
@@ -10,16 +10,19 @@ const UseFirebase = () => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [admin, setAdmin] = useState(false);
-    const [token, setToken] = useState('')
+    const [token, setToken] = useState('');
+    const [value, setValue] = React.useState(0);
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
 
-    const createUser = ({ email, password, name }) => {
+    const createUser = ({ email, password, name, history }) => {
         setIsLoading(true)
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                const newDestination = '/';
+                history.replace(newDestination);
                 const user = userCredential.user;
                 const newUser = { email, displayName: name };
                 setUser(newUser)
@@ -56,9 +59,11 @@ const UseFirebase = () => {
             }).finally(() => setIsLoading(false));
     };
 
-    const googleSignIn = () => {
+    const googleSignIn = (location, history) => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
+                const newDestination = location?.state?.from || '/';
+                history.replace(newDestination);
                 const user = result.user;
                 setUser(user)
                 saveUser(user.email, user.displayName, 'PUT')
@@ -83,6 +88,22 @@ const UseFirebase = () => {
             setIsLoading(false)
         });
     }, []);
+
+    const handleRating = ({ Name, review, rating }) => {
+        const values = { Name, review, rating };
+        fetch('http://localhost:5000/review', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        }).then(res => res.json())
+            .then(data => {
+                if (data.insertedId !== '') {
+                    alert('success')
+                }
+            })
+    }
 
     useEffect(() => {
         fetch(`http://localhost:5000/users/${user.email}`)
@@ -120,6 +141,10 @@ const UseFirebase = () => {
         googleSignIn,
         logOut,
         isLoading,
+        value,
+        setValue,
+        handleRating
+
     });
 };
 

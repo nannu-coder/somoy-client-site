@@ -12,11 +12,15 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Alert } from '@mui/material';
+import { useLocation, useHistory } from 'react-router-dom';
 
 
 const SignUp = () => {
     const [data, setData] = useState({});
     const { createUser, isLoading, error, googleSignIn } = useAuth();
+
+    const location = useLocation();
+    const history = useHistory();
 
     const handleData = (event) => {
         event.preventDefault();
@@ -29,7 +33,7 @@ const SignUp = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const values = { email: data.email, password: data.password, name: data.firstName }
+        const values = { email: data.email, password: data.password, name: data.firstName, location, history }
         createUser(values)
     };
 

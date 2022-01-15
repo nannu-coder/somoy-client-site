@@ -24,6 +24,11 @@ const Login = () => {
     const location = useLocation();
     const history = useHistory();
 
+    // googleSignIn(location, history)
+    const handleGoogleSignIn = () => {
+        googleSignIn(location, history)
+    }
+
     const handleData = (event) => {
         event.preventDefault();
         const field = event.target.name;
@@ -100,7 +105,7 @@ const Login = () => {
                             </Link>
                         </Grid>
                     </Grid>
-                    <Button onClick={googleSignIn} sx={{ margin: '20px 0' }} fullWidth variant='contained'>Continue With Google</Button>
+                    <Button onClick={handleGoogleSignIn} sx={{ margin: '20px 0' }} fullWidth variant='contained'>Continue With Google</Button>
                     {error && <Alert severity="error">{error}</Alert>}
                     {/* {!error && <Alert severity="success">Login Successfully</Alert>} */}
                 </Box>}
