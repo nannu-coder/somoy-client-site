@@ -22,7 +22,7 @@ const AddServices = () => {
         const values = service;
         console.log(values)
 
-        fetch('http://localhost:5000/products', {
+        fetch('https://dry-hollows-72773.herokuapp.com/products', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

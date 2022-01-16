@@ -11,7 +11,7 @@ const ManageOrder = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders/allorders')
+        fetch('https://dry-hollows-72773.herokuapp.com/orders/allorders')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [])
@@ -25,7 +25,7 @@ const ManageOrder = () => {
                     </Typography>
                 </div>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    {products.slice(0, 6).map((product) => (
+                    {products.map((product) => (
                         <Grid item xs={4} sm={4} md={4} key={product._id}>
                             <ControlOrder product={product}></ControlOrder>
                         </Grid>

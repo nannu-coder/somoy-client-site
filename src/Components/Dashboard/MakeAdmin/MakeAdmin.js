@@ -19,7 +19,7 @@ const MakeAdmin = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const user = { email }
-        fetch('http://localhost:5000/users/admin', {
+        fetch('https://dry-hollows-72773.herokuapp.com/users/admin', {
             method: 'PUT',
             headers: {
                 'authorization': `bearer ${token}`,

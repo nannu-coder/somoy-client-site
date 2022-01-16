@@ -91,7 +91,7 @@ const UseFirebase = () => {
 
     const handleRating = ({ Name, review, rating }) => {
         const values = { Name, review, rating };
-        fetch('http://localhost:5000/review', {
+        fetch('https://dry-hollows-72773.herokuapp.com/review', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -106,14 +106,14 @@ const UseFirebase = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/users/${user.email}`)
+        fetch(`https://dry-hollows-72773.herokuapp.com/users/${user.email}`)
             .then(res => res.json())
             .then(data => setAdmin(data.admin))
     }, [user.email])
 
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName }
-        fetch('http://localhost:5000/users', {
+        fetch('https://dry-hollows-72773.herokuapp.com/users', {
             method: method,
             headers: {
                 'Content-Type': 'application/json'

@@ -66,7 +66,7 @@ const BuyNow = () => {
         setOrderData(finalData)
         if (activeStep == steps.length - 1) {
             // send data to the server
-            fetch('http://localhost:5000/orders', {
+            fetch('https://dry-hollows-72773.herokuapp.com/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

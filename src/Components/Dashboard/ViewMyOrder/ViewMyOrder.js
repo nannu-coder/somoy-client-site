@@ -11,23 +11,26 @@ const ViewMyOrder = ({ product }) => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('https://dry-hollows-72773.herokuapp.com/products')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, []);
 
     const Detail = products.filter(item => item._id == Id);
     const handleDelete = (id) => {
-        const url = `http://localhost:5000/orders/${id}`
-        fetch(url, {
-            method: 'DELETE',
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.deletedCount === 1) {
-                    alert('succesfully Deleted')
-                }
+        const proceed = window.confirm('are you sure to delete');
+        if (proceed) {
+            const url = `https://dry-hollows-72773.herokuapp.com/orders/${id}`
+            fetch(url, {
+                method: 'DELETE',
             })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount === 1) {
+                        alert('succesfully Deleted')
+                    }
+                })
+        }
     }
 
     return (
